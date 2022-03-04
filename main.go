@@ -44,6 +44,7 @@ func run() {
 }
 func child() {
 	fmt.Printf("Running %v as %d\n", os.Args[2:], os.Getpid())
+	cg()
 	syscall.Sethostname(([]byte("container")))
 	syscall.Chroot("../ubuntu-fs")
 	syscall.Chdir("/")
