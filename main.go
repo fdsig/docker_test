@@ -2,8 +2,11 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 	"os/exec"
+	"path/filepath"
+	"strconv"
 	"syscall"
 )
 
@@ -56,6 +59,19 @@ func child() {
 	syscall.Unmount("/proc", 0)
 
 }
+
+func ch() {
+	cgrops := "/sys/fs/cgroup"
+	pids := filepath.Join(cgrops, "pids")
+	err := os.Mkdir(filepath.Join(pids, "fds"), 0755)
+	if err != nil && !os.IsExist(err) {
+		panic(err)
+	}
+	must(ioutil.WriteFile(filepath.Join(pids, "fds/pids.max"), []byte("20"), 077))
+	must(ioutil.WriteFile(filepath.Join(pids, "fds/notify_on_relese"), []byte("1"), 0700))
+	must(ioutil.WriteFile(filepath.Join(pids, "fds/cgroup.procs"), []byte(strconv.Itoa(os.Getpid())), 0700))
+}
+
 func must(err error) {
 	if err != nil {
 		panic(err)
