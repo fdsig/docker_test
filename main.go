@@ -64,11 +64,11 @@ func child() {
 func cg() {
 	cgroups := "/sys/fs/cgroup/"
 	pids := filepath.Join(cgroups, "pids")
-	os.Mkdir(filepath.Join(pids, "fds"), 0755)
-	must(ioutil.WriteFile(filepath.Join(pids, "fds/pids.max"), []byte("20"), 0700))
+	os.Mkdir(filepath.Join(pids, "user_name"), 0755)
+	must(ioutil.WriteFile(filepath.Join(pids, "user_name/pids.max"), []byte("20"), 0700))
 	// Removes the new cgroup in place after the container exits
-	must(ioutil.WriteFile(filepath.Join(pids, "fds/notify_on_release"), []byte("1"), 0700))
-	must(ioutil.WriteFile(filepath.Join(pids, "fds/cgroup.procs"), []byte(strconv.Itoa(os.Getpid())), 0700))
+	must(ioutil.WriteFile(filepath.Join(pids, "user_name/notify_on_release"), []byte("1"), 0700))
+	must(ioutil.WriteFile(filepath.Join(pids, "user_name/cgroup.procs"), []byte(strconv.Itoa(os.Getpid())), 0700))
 }
 
 func must(err error) {
