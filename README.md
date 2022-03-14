@@ -21,7 +21,7 @@ rsync -aAXv / --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*",
 
 fork bomb to test controle group:
 
-WARNING dont run unless in a container with a contole group!!
+WARNING dont run unless in a container with a controle group!!
 
 ```bash
 :() { :|: &};:
